@@ -1,9 +1,12 @@
 package com.tianqi.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.tianqi.db.*;
@@ -81,33 +84,66 @@ public class Utility {
 	public static void handleWeatherResponse(Context context,String response) {
 		try{
 			JSONObject jsonObject=new JSONObject(response);
-			JSONObject weatherInfo=jsonObject.getJSONObject("weatherinfo");
-			String cityName=weatherInfo.getString("city");
-			String weatherCode=weatherInfo.getString("cityid");
-			String temp1=weatherInfo.getString("temp1");
-			String temp2=weatherInfo.getString("temp2");
-			String weatherDesp=weatherInfo.getString("weather");
-			String publishTime=weatherInfo.getString("ptime");
-			saveWeatherInfo(context,cityName,weatherCode,temp1,temp2,weatherDesp,publishTime);
+			String neirong = jsonObject.getString("HeWeather data service 3.0");
+			JSONArray jsonArray = new JSONArray(neirong);
+	        JSONObject jsonObject1 = jsonArray.getJSONObject(0);	
+			JSONObject now=jsonObject1.getJSONObject("now");
+			JSONObject cond = now.getJSONObject("cond");
+			JSONObject basic=jsonObject1.getJSONObject("basic");
+			JSONObject update = basic.getJSONObject("update");
+			JSONObject wind = now.getJSONObject("wind");
+			String tem = now.getString("fl");
+			String state = cond.getString("txt");
+			String cityName = basic.getString("city");
+			String time = update.getString("loc");
+			String wind1 = wind.getString("dir");
+			String wind2 = wind.getString("sc");
+			//
+			String neirong2 = jsonObject1.getString("daily_forecast");
+			JSONArray jsonArray2 = new JSONArray(neirong2);
+			List<String> fore = new ArrayList<String>();
+			for(int i=0; i<3;i++){
+		        JSONObject jsonObject21 = jsonArray2.getJSONObject(i);	
+		        String date = jsonObject21.getString("date").substring(5);
+		        JSONObject cond2 = jsonObject21.getJSONObject("cond");
+		        String state1 = cond2.getString("txt_d");
+		        String state2 = cond2.getString("txt_n");
+		        JSONObject tmp = jsonObject21.getJSONObject("tmp");
+		        String tmp_max = tmp.getString("max");
+		        String tmp_min = tmp.getString("min");
+		        if(state1.equals(state2))
+		        	fore.add(date+" "+tmp_min+"°C~"+tmp_max+"°C"+" "+state1);
+		        else fore.add(date+" "+tmp_min+"°C~"+tmp_max+"°C"+" "+state1+"转"+state2);
+			}
+			saveWeatherInfo(context,cityName,tem,state,time,wind1,wind2,fore);
 		}catch(Exception e){
 			Log.v("crb", "handleWeatherResponse的错误报告：  "+e.toString());
 		}
 	}
 	/**
 	 * 保存天气数据
+	 * @param time 
+	 * @param wind2 
+	 * @param wind1 
+	 * @param foreDate 
 	 */
-	private static void saveWeatherInfo(Context context, String cityName,String weatherCode, String temp1,
-			String temp2, String weatherDesp,String publishTime) {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy年M月d日",Locale.CHINA);
+	private static void saveWeatherInfo(Context context, String cityName,String tem,String state, 
+			String time, String wind1, String wind2, List<String> fore) {
+		//SimpleDateFormat sdf=new SimpleDateFormat("yyyy年M月d日",Locale.CHINA);
 		SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);
-		editor.putString("city_name", cityName);
-		editor.putString("weather_code", weatherCode);
-		editor.putString("temp1", temp1);
-		editor.putString("temp2", temp2);
-		editor.putString("weather_desp", weatherDesp);
-		editor.putString("publish_time", publishTime);
-		editor.putString("current_date", sdf.format(new Date()));
+		editor.putString("tem",tem);
+		editor.putString("state",state);
+		editor.putString("cityname",cityName );
+		editor.putString("time", time);
+		editor.putString("wind1",wind1 );
+		editor.putString("wind2",wind2 );
+		editor.putString("fore0", fore.get(0));
+		editor.putString("fore1", fore.get(1));
+		editor.putString("fore2", fore.get(2));
+		
+		//editor.putString("", );
+
 		editor.commit();
 	}
 }

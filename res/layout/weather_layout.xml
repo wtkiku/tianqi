@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <LinearLayout 
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:background="#484E61"
+         android:orientation="horizontal"
+        >
+        <Button android:id="@+id/change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="换地"
+            android:textColor="#fff"
+            />
+        <TextView 
+            android:id="@+id/cityname"
+            android:text=" "
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="#fff"
+            />
+        <Button android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="更新"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	    <TextView android:id="@+id/tem"
+	        android:text="27°"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="60sp"/>
+	    <ImageView android:id="@+id/pic"
+	        android:layout_width="wrap_content"
+	        android:layout_height="fill_parent"
+	        android:src="@drawable/ic"/>
+	</LinearLayout>
+	<TextView android:id="@+id/state"
+        android:text=" "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"/>
+    <TextView android:id="@+id/wind"
+        android:text=" "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"/>	
+    <TextView android:id="@+id/time"
+        android:text=" "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"/>
+    <LinearLayout android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+        <TextView 
+	        android:text="未来三天天气预报"
+	        android:layout_width="fill_parent"
+	        android:gravity="center"
+	        android:layout_height="wrap_content"
+	        android:textSize="25sp"/>
+        <TextView android:id="@+id/forecast1"
+	        android:text="9月19日  多云转晴 20~33°"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"/>
+        <TextView android:id="@+id/forecast2"
+	        android:text="9月19日  多云转晴 20~33°"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"/>
+        <TextView android:id="@+id/forecast3"
+	        android:text="9月19日  多云转晴 20~33°"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"/>            
+    </LinearLayout>
+</LinearLayout>
