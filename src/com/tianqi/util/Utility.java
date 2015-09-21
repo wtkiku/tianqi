@@ -94,6 +94,7 @@ public class Utility {
 			JSONObject wind = now.getJSONObject("wind");
 			String tem = now.getString("fl");
 			String state = cond.getString("txt");
+			String picCode = cond.getString("code");
 			String cityName = basic.getString("city");
 			String time = update.getString("loc");
 			String wind1 = wind.getString("dir");
@@ -115,7 +116,7 @@ public class Utility {
 		        	fore.add(date+" "+tmp_min+"°C~"+tmp_max+"°C"+" "+state1);
 		        else fore.add(date+" "+tmp_min+"°C~"+tmp_max+"°C"+" "+state1+"转"+state2);
 			}
-			saveWeatherInfo(context,cityName,tem,state,time,wind1,wind2,fore);
+			saveWeatherInfo(context,cityName,tem,state,picCode,time,wind1,wind2,fore);
 		}catch(Exception e){
 			Log.v("crb", "handleWeatherResponse的错误报告：  "+e.toString());
 		}
@@ -128,12 +129,13 @@ public class Utility {
 	 * @param foreDate 
 	 */
 	private static void saveWeatherInfo(Context context, String cityName,String tem,String state, 
-			String time, String wind1, String wind2, List<String> fore) {
+			String picCode,String time, String wind1, String wind2, List<String> fore) {
 		//SimpleDateFormat sdf=new SimpleDateFormat("yyyy年M月d日",Locale.CHINA);
 		SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putBoolean("city_selected", true);
 		editor.putString("tem",tem);
 		editor.putString("state",state);
+		editor.putString("picCode", picCode);
 		editor.putString("cityname",cityName );
 		editor.putString("time", time);
 		editor.putString("wind1",wind1 );

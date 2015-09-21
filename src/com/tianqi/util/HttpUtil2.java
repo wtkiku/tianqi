@@ -20,8 +20,8 @@ public class HttpUtil2 {
 					connection=(HttpURLConnection)url.openConnection();
 					connection.setRequestMethod("GET");
 			        connection.setRequestProperty("apikey",  "83b2954e4be42c63d59c05dd2e0d1ecc");
-					connection.setConnectTimeout(8000);
-					connection.setReadTimeout(8000);
+					connection.setConnectTimeout(2000);
+					connection.setReadTimeout(2000);
 					InputStream in=connection.getInputStream();
 					BufferedReader reader=new BufferedReader(new InputStreamReader(in));
 					StringBuilder response=new StringBuilder();
