@@ -1,5 +1,7 @@
 package com.tianqi.service;
 
+import java.io.UnsupportedEncodingException;
+
 import com.tianqi.receiver.AutoUpdateReceiver;
 import com.tianqi.util.HttpCallbackListener;
 import com.tianqi.util.HttpUtil2;
@@ -44,7 +46,14 @@ public class AutoUpdateService extends Service {
 		SharedPreferences prefs = PreferenceManager.
 				getDefaultSharedPreferences(this);
 		String cityName = prefs.getString("cityname", "");
-		String address = "http://apis.baidu.com/heweather/pro/weather?city="+cityName;
+		String address = null;
+		try {
+			address = "http://apis.baidu.com/heweather/pro/weather?city="
+					+java.net.URLEncoder.encode(cityName,"utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO 自动生成的 catch 块
+			e1.printStackTrace();
+		}
 		HttpUtil2.sendHttpRequest(address, new HttpCallbackListener() {
 			@Override
 			public void onFinish(String response) {

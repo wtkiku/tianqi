@@ -113,8 +113,8 @@ public class Utility {
 		        String tmp_max = tmp.getString("max");
 		        String tmp_min = tmp.getString("min");
 		        if(state1.equals(state2))
-		        	fore.add(date+" "+tmp_min+"буC~"+tmp_max+"буC"+" "+state1);
-		        else fore.add(date+" "+tmp_min+"буC~"+tmp_max+"буC"+" "+state1+"╫к"+state2);
+		        	fore.add(date+"   "+tmp_min+"буC~"+tmp_max+"буC"+"   "+state1);
+		        else fore.add(date+"   "+tmp_min+"буC~"+tmp_max+"буC"+"   "+state1+"╫к"+state2);
 			}
 			saveWeatherInfo(context,cityName,tem,state,picCode,time,wind1,wind2,fore);
 		}catch(Exception e){

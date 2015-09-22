@@ -122,14 +122,9 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	 */
 	private void queryFromServer(final String cityName) {
 		String address = null;
-		try {
-			address = "http://apis.baidu.com/heweather/pro/weather?city="
-					+java.net.URLEncoder.encode(cityName,"utf-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO 自动生成的 catch 块
-			e1.printStackTrace();
-		}
-		HttpUtil2.sendHttpRequest(address, new HttpCallbackListener() {
+		address = "https://api.heweather.com/x3/weather?city="
+				+java.net.URLEncoder.encode(cityName)+"&key=07da7c0bd34d4fe4a519df49c7063cd1";
+		HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
 			@Override
 			public void onFinish(final String response) {
 				// 处理服务器返回的天气信息
